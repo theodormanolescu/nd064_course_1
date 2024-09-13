@@ -3,6 +3,8 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 import logging
+import sys
+import os
 
 connections = 0
 
@@ -104,8 +106,22 @@ def metrics():
     return response
 
 
+def add_logging():
+    loglevel = os.getenv("LOGLEVEL", "DEBUG").upper()
+    loglevel = (
+        getattr(logging, loglevel)
+        if loglevel in ["CRITICAL", "DEBUG", "ERROR", "INFO", "WARNING", ]
+        else logging.DEBUG
+    )
+    logging.basicConfig(
+        stream=sys.stdout, level=loglevel
+    )
+    error_handler = logging.StreamHandler(sys.stderr)
+    error_handler.setLevel(logging.ERROR)
+    logging.getLogger().addHandler(error_handler)
+
+
 # start the application on port 3111
 if __name__ == "__main__":
-    # Stream logs to a file, and set the default log level to DEBUG
-    logging.basicConfig(filename='app.log', level=logging.DEBUG)
+    add_logging()
     app.run(host='0.0.0.0', port='3111')
