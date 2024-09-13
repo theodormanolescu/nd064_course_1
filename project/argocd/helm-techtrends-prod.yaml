@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: techtrends-prod
+    namespace: default
+spec:
+    destination:
+      namespace: default
+      server: https://kubernetes.default.svc
+    project: default
+    source:
+      path: project/helm
+      repoURL: https://github.com/theodormanolescu/nd064_course_1
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - values.yaml
+          - values-prod.yaml
+        ignoreMissingValueFiles: true
+    syncPolicy: {}

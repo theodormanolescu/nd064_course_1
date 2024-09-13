@@ -1,0 +1,9 @@
+apiVersion: v1
+name: techtrends
+description: Install a Techtrends app
+keywords:
+  - techtrends
+version: 1.0.0
+maintainers:
+  - name: Theodor Manolescu
+    email: theodor.manolescu14@gmail.com
