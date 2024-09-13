@@ -113,15 +113,16 @@ def add_logging():
         if loglevel in ["CRITICAL", "DEBUG", "ERROR", "INFO", "WARNING", ]
         else logging.DEBUG
     )
-    logging.basicConfig(
-        stream=sys.stdout, level=loglevel
-    )
-    error_handler = logging.StreamHandler(sys.stderr)
-    error_handler.setLevel(logging.ERROR)
-    logging.getLogger().addHandler(error_handler)
+
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stdout_handler.setLevel(logging.DEBUG)
+
+    stderr_handler = logging.StreamHandler(sys.stderr)
+    stderr_handler.setLevel(logging.ERROR)
+
+    logging.basicConfig(level=loglevel, handlers=[stderr_handler, stdout_handler])
 
 
-# start the application on port 3111
 if __name__ == "__main__":
     add_logging()
     app.run(host='0.0.0.0', port='3111')
