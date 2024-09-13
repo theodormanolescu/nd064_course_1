@@ -120,7 +120,8 @@ def add_logging():
     stderr_handler = logging.StreamHandler(sys.stderr)
     stderr_handler.setLevel(logging.ERROR)
 
-    logging.basicConfig(level=loglevel, handlers=[stderr_handler, stdout_handler])
+    logging.basicConfig(level=loglevel, handlers=[stderr_handler, stdout_handler],
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 if __name__ == "__main__":
